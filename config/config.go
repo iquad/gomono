@@ -16,14 +16,18 @@ func SetLogger(li *log.Logger) {
 	logger = li
 }
 
-func (conf Config) Get(key, fallback string) string {
+func (conf Config) Get(key string, fallback ...string) string {
 	if _, ok := conf[key]; !ok {
-		return fallback
+		if ok := len(fallback) > 0; !ok {
+			return ""
+		}
+		return fallback[0]
 	}
 
 	return conf[key]
 }
 
+// ReadConfiguration is configuration wrapper for Config
 func ReadConfiguration() *Config {
 	configuration := Config{}
 
