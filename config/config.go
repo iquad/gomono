@@ -6,7 +6,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type config map[string]string
+// Config is wrapper and holder for configurations
+type Config map[string]string
 
 var logger *log.Logger
 
@@ -15,7 +16,7 @@ func SetLogger(li *log.Logger) {
 	logger = li
 }
 
-func (conf config) Get(key, fallback string) string {
+func (conf Config) Get(key, fallback string) string {
 	if _, ok := conf[key]; !ok {
 		return fallback
 	}
@@ -23,8 +24,8 @@ func (conf config) Get(key, fallback string) string {
 	return conf[key]
 }
 
-func ReadConfiguration() *config {
-	configuration := config{}
+func ReadConfiguration() *Config {
+	configuration := Config{}
 
 	conf, err := godotenv.Read(".env")
 	if err != nil {
